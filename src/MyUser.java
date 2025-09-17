@@ -1,21 +1,33 @@
 public class MyUser {
+    private long id;
     private String login;
     private String password;
+
+    public MyUser() {}
 
     public MyUser(String login, String password) {
         this.login = login;
         this.password = password;
     }
 
-    public String getUserLogin() { return login; }
-    public void setUserLogin(String username) { this.login = login; }
+    public MyUser(long id, String login, String password) {
+        this.id = id;
+        this.login = login;
+        this.password = password;
+    }
 
-    public String getUserPassword() { return password; }
-    public void setUserPassword(String password) { this.password = password; }
+    public long getId() { return id; }
+    public void setId(long id) { this.id = id; }
+
+    public String getLogin() { return login; }
+    public void setLogin(String login) { this.login = login; }
+
+    public String getPassword() { return password; }
+    public void setPassword(String password) { this.password = password; }
 
     @Override
     public String toString() {
-        return login + ":" + password;
+        return id + ":" + login + ":" + password;
     }
 
     public static MyUser fromString(String userString) {
@@ -24,11 +36,16 @@ public class MyUser {
         }
 
         String[] parts = userString.split(":");
-        if (parts.length == 2) {
-            String login = parts[0].trim();
-            String password = parts[1].trim();
-            if (!login.isEmpty() && !password.isEmpty()) {
-                return new MyUser(login, password);
+        if (parts.length == 3) {
+            try {
+                long id = Long.parseLong(parts[0].trim());
+                String login = parts[1].trim();
+                String password = parts[2].trim();
+                if (!login.isEmpty() && !password.isEmpty()) {
+                    return new MyUser(id, login, password);
+                }
+            } catch (NumberFormatException e) {
+                return null;
             }
         }
         return null;

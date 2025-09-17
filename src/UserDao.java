@@ -1,7 +1,7 @@
-import java.util.List;
+import java.util.Optional;
 
-public interface UserDao {
-    boolean containsUser(String login);
-    MyUser findUser(String login, String password);
-    void addUser(MyUser user);
+public interface UserDao extends Dao<MyUser> {
+    Optional<MyUser> findByLogin(String login);
+    Optional<MyUser> findByLoginAndPassword(String login, String password);
+    boolean existsByLogin(String login);
 }

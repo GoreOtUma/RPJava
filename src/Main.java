@@ -4,16 +4,16 @@ public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-        UserDao storage = new RegAuthFile("users.txt");
-        System.out.println("Используется файловое хранилище по умолчанию");
-        System.out.println(((RegAuthFile) storage).getFileInfo());
+        UserDao userDao = new UserDaoImplFile("users.txt");
+        System.out.println("Используется файловое хранилище данных");
+        //UserDao userDao = new UserDaoImplList();
+        //System.out.println("Данные сохраняются в список");
 
-        AppRegAuth app = new AppRegAuth(storage);
+        AppRegAuth app = new AppRegAuth(userDao);
 
         boolean running = true;
 
         while (running) {
-            System.out.println("=== Система регистрации и авторизации ===");
             System.out.println("1. Регистрация");
             System.out.println("2. Авторизация");
             System.out.println("3. Выход");
@@ -39,10 +39,8 @@ public class Main {
                 default:
                     System.out.println("Неверный выбор!");
             }
-
             System.out.println();
         }
-
         scanner.close();
     }
 
